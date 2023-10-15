@@ -21,9 +21,11 @@ const entities = [
 
 //
 const bullsHover = document.querySelectorAll('.bull');
+const places = document.querySelectorAll('.place');
 // Arrows
-const leftArrow = document.querySelector('.left-arrow');
-const rightArrow = document.querySelector('.right-arrow');
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+let currentIndex = 0;
 // Dots
 const bullLeft = document.querySelector('.bull-left');
 const bullCenter = document.querySelector('.bull-center');
@@ -38,11 +40,70 @@ const placeLeft = document.querySelector('.place-left');
 const placeCenter = document.querySelector('.place-center');
 const placeRight = document.querySelector('.place-right');
 
+const setEntity = (index) => {
+    city.innerHTML = entities[index].city;
+    apartmentArea.innerText = entities[index].apartment_area;
+    repairTime.innerText = entities[index].repair_time;
+    image.src = entities[index].img;
+}
+
+const setFirstEntity = () => {
+    currentIndex = 0;
+    setEntity(currentIndex);
+
+    cleanStyles();
+
+    bullLeft.classList.add('current-bull');
+    bullLeft.src="media/wbull.svg";
+
+    placeLeft.classList.add('current-place');
+}
+const setSecondEntity = () => {
+    currentIndex = 1;
+    setEntity(currentIndex);
+
+    cleanStyles();
+
+    bullCenter.classList.add('current-bull');
+    bullCenter.src="media/wbull.svg";
+
+    placeCenter.classList.add('current-place');
+}
+const setThirdEntity = () => {
+    currentIndex = 2;
+    setEntity(currentIndex);
+
+    cleanStyles();
+
+    bullRight.classList.add('current-bull');
+    bullRight.src="media/wbull.svg";
+
+    placeRight.classList.add('current-place');
+}
+
+const cleanStyles = () => {
+    bullsHover.forEach((bull) => {
+        if (bull.classList.contains('current-bull')) {
+            bull.classList.remove('current-bull');
+            bull.src="media/gbull.svg";
+        }
+    });
+
+    places.forEach((place) => {
+        if (place.classList.contains('current-place')) {
+            place.classList.remove('current-place');
+        }
+    });
+}
+const changeStyles = () => {
+
+}
+
 bullsHover.forEach((bull) => {
-    bull.addEventListener("mouseenter", (e) => {
+    bull.addEventListener("mouseenter", () => {
         bull.src="media/wbull.svg";
-        bull.addEventListener("mouseleave", (e) => {
-            if (bull.className === 'bull current-bull') {
+        bull.addEventListener("mouseleave", () => {
+            if (bull.classList.contains('current-bull')) {
                 bull.src="media/wbull.svg";
             } else {
                 bull.src="media/gbull.svg";
@@ -50,3 +111,46 @@ bullsHover.forEach((bull) => {
         });
     });
 });
+
+prev.addEventListener('click', () => {
+    if (currentIndex === 0) {
+        setEntity(currentIndex + 2);
+        currentIndex = 2;
+    } else {
+        setEntity(currentIndex - 1);
+        currentIndex -= 1;
+    }
+    if (currentIndex === 0) {
+        setFirstEntity();
+    } else if (currentIndex === 1) {
+        setSecondEntity();
+    } else if (currentIndex === 2) {
+        setThirdEntity();
+    }
+});
+next.addEventListener('click', () => {
+    if (currentIndex === 2) {
+        setEntity(currentIndex - 2);
+        currentIndex = 0;
+    } else {
+        setEntity(currentIndex + 1);
+        currentIndex += 1;
+    }
+    if (currentIndex === 0) {
+        setFirstEntity();
+    } else if (currentIndex === 1) {
+        setSecondEntity();
+    } else if (currentIndex === 2) {
+        setThirdEntity();
+    }
+});
+
+
+
+bullLeft.addEventListener('click', setFirstEntity);
+bullCenter.addEventListener('click', setSecondEntity);
+bullRight.addEventListener('click', setThirdEntity);
+
+placeLeft.addEventListener('click', setFirstEntity);
+placeCenter.addEventListener('click', setSecondEntity);
+placeRight.addEventListener('click', setThirdEntity);

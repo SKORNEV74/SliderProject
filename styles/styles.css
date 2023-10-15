@@ -84,7 +84,7 @@ section {
 .comp, .current-a, .rostov, .section-two h2, .section-two h4 {
     color: #E3B873;
 }
-.left-arrow, .bull, .right-arrow, .place {
+.prev, .bull, .next, .place {
     cursor: pointer;
 }
 
@@ -124,7 +124,7 @@ section {
 .chose-place {
     color: rgba(255, 255, 255, .3);;
 }
-.left-arrow {
+.prev {
     margin-right: 30px;
 }
 .bull {
@@ -133,7 +133,7 @@ section {
 .bull-center {
     margin: 0 17px;
 }
-.right-arrow {
+.next {
     margin-left: 30px;
 }
 .places {
