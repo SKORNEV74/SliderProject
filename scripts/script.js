@@ -19,6 +19,22 @@ const entities = [
     }
 ]
 
+// Думал сделать красивую анимацию, посредством темноты,
+// но на это ушло много времени, а результата нет.
+// Так что пока что отложу:)
+
+// const fadeIn = (el) => {
+//     el.style.opacity = 0;
+//     el.style.transition = 'opacity 10ms';
+//     el.style.opacity = 1;
+// }
+// const fadeOut = (el) => {
+//     el.style.opacity = 1;
+//     el.style.transition = 'opacity 10ms';
+//     el.style.opacity = 0;
+//
+// }
+
 //
 const bullsHover = document.querySelectorAll('.bull');
 const places = document.querySelectorAll('.place');
@@ -76,27 +92,23 @@ const setThirdEntity = () => {
     cleanStyles();
 
     bullRight.classList.add('current-bull');
-    bullRight.src="media/wbull.svg";
+    bullRight.src = "media/wbull.svg";
 
     placeRight.classList.add('current-place');
 }
 
 const cleanStyles = () => {
     bullsHover.forEach((bull) => {
-        if (bull.classList.contains('current-bull')) {
-            bull.classList.remove('current-bull');
-            bull.src="media/gbull.svg";
+        if (bull.classList.contains(`current-bull`)) {
+            bull.classList.remove(`current-bull`);
+            bull.src = "media/gbull.svg";
         }
     });
-
     places.forEach((place) => {
-        if (place.classList.contains('current-place')) {
-            place.classList.remove('current-place');
+        if (place.classList.contains(`current-place`)) {
+            place.classList.remove(`current-place`);
         }
     });
-}
-const changeStyles = () => {
-
 }
 
 bullsHover.forEach((bull) => {
@@ -145,8 +157,6 @@ next.addEventListener('click', () => {
     }
 });
 
-
-
 bullLeft.addEventListener('click', setFirstEntity);
 bullCenter.addEventListener('click', setSecondEntity);
 bullRight.addEventListener('click', setThirdEntity);
@@ -154,3 +164,20 @@ bullRight.addEventListener('click', setThirdEntity);
 placeLeft.addEventListener('click', setFirstEntity);
 placeCenter.addEventListener('click', setSecondEntity);
 placeRight.addEventListener('click', setThirdEntity);
+
+setInterval(() => {
+    if (currentIndex === 2) {
+        setEntity(currentIndex - 2);
+        currentIndex = 0;
+    } else {
+        setEntity(currentIndex + 1);
+        currentIndex += 1;
+    }
+    if (currentIndex === 0) {
+        setFirstEntity();
+    } else if (currentIndex === 1) {
+        setSecondEntity();
+    } else if (currentIndex === 2) {
+        setThirdEntity();
+    }
+},5000);
